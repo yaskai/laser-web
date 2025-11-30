@@ -139,6 +139,7 @@ int main () {
 
 		BeginMode3D(camera);
 
+		BeginBlendMode(BLEND_ADDITIVE);
 		BeginShaderMode(shader);
 
 		for(uint8_t i = 0; i < CUBE_COUNT; i++) {
@@ -152,6 +153,8 @@ int main () {
 		EndShaderMode();
 
 		ReflectLaser(ray, -1, 0);
+
+		EndBlendMode();
 
 		EndMode3D();
 
@@ -171,7 +174,7 @@ void ReflectLaser(Ray ray, int8_t ignore_cube, uint8_t bounce) {
 	bool hit = false;
 
 	short color_id = (bounce + 1) % 5;
-	Color color = colors[color_id];
+	Color color = ColorAlpha(colors[color_id], 0.85f);
 
 	for(uint8_t i = 0; i < CUBE_COUNT; i++) {
 		Cube *cube = &cubes[i];
